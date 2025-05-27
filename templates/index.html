@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App by Nebin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!--Styling-->
+</head>
+<body>
+    <canvas id="weather-canvas"></canvas>
+
+    <div class="container">
+        <h1>Weather App</h1>
+        <form method="POST">
+            <input type="text" name="city" placeholder="Enter city name" required>
+            <button type="submit">Check Weather</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        
+        <!--Simple logic-->
+        <div id="weather-box" class="weather {% if weather %}show{% endif %}"
+             data-weather="{{ weather.main if weather else '' }}"
+             data-local-time="{{ weather.local_time if weather else '' }}">
+            {% if weather %}
+                <h2>{{ weather.city }}</h2>
+                <p>{{ weather.temperature }}°C - {{ weather.description }}</p>
+                <img src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Weather icon">
+            {% endif %}
+        </div>
+    </div>
+
+    <!--Simple logic for the script-->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
